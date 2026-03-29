@@ -60,3 +60,17 @@ export interface CalendarEntry {
 
 export type CalendarEntryInsert = Omit<CalendarEntry, 'id' | 'user_id' | 'created_at' | 'updated_at' | 'script'>
 export type CalendarEntryUpdate = Partial<CalendarEntryInsert>
+
+export type AudioStatus = 'pending' | 'generating' | 'ready' | 'error'
+
+export interface AudioFile {
+  id: string
+  user_id: string
+  script_id: string
+  storage_path: string
+  status: AudioStatus
+  error_msg: string | null
+  duration_s: number | null
+  created_at: string
+  updated_at: string
+}

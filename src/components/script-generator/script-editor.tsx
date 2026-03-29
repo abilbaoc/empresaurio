@@ -9,11 +9,13 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Sparkles, Save, Copy, Check, RotateCcw } from 'lucide-react'
-import type { Script, ViralTopic, ScriptVersion } from '@/lib/types'
+import type { Script, ViralTopic, ScriptVersion, AudioFile } from '@/lib/types'
+import { AudioPlayer } from '@/components/script-generator/AudioPlayer'
 
 interface ScriptEditorProps {
   script?: Script & { topic?: ViralTopic | null; versions?: ScriptVersion[] }
   topics: ViralTopic[]
+  audio?: AudioFile | null
 }
 
 const STYLE_PRESETS = [
@@ -31,7 +33,7 @@ const DURATION_OPTIONS = [
   { label: '2 minutos', value: '2min' },
 ]
 
-export function ScriptEditor({ script, topics }: ScriptEditorProps) {
+export function ScriptEditor({ script, topics, audio }: ScriptEditorProps) {
   const router = useRouter()
   const isEditing = !!script
 
@@ -356,6 +358,12 @@ export function ScriptEditor({ script, topics }: ScriptEditorProps) {
           }
           className="flex min-h-[500px] w-full rounded-md border border-input bg-transparent px-4 py-3 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring resize-none font-mono leading-relaxed"
         />
+
+        {isEditing && script && (
+          <div className="pt-2">
+            <AudioPlayer scriptId={script.id} initialAudio={audio} />
+          </div>
+        )}
       </div>
     </div>
   )
