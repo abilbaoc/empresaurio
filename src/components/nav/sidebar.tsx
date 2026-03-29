@@ -11,12 +11,14 @@ import {
   LayoutDashboard,
   LogOut,
   TrendingUp,
+  Flame,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/viral-tracker', label: 'Viral Tracker', icon: TrendingUp },
+  { href: '/trending', label: 'Trending', icon: Flame },
   { href: '/script-generator', label: 'Script Generator', icon: FileText },
   { href: '/calendar', label: 'Calendario', icon: CalendarDays },
   { href: '/analytics', label: 'Analytics', icon: BarChart3 },

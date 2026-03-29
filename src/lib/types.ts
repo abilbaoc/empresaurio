@@ -80,3 +80,19 @@ export interface AudioFile {
   created_at: string
   updated_at: string
 }
+
+export type TrendingSource = 'techcrunch' | 'theverge' | 'arstechnica' | 'hackernews' | 'producthunt'
+
+export interface TrendingTopic {
+  id: string
+  user_id: string
+  title: string
+  url: string | null
+  source: TrendingSource
+  score: number
+  fetched_at: string
+  used: boolean
+  created_at: string
+}
+
+export type TrendingTopicInsert = Omit<TrendingTopic, 'id' | 'user_id' | 'created_at'>

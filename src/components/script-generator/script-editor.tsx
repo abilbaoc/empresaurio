@@ -16,6 +16,8 @@ interface ScriptEditorProps {
   script?: Script & { topic?: ViralTopic | null; versions?: ScriptVersion[] }
   topics: ViralTopic[]
   audio?: AudioFile | null
+  initialTopicText?: string
+  initialNotes?: string
 }
 
 const STYLE_PRESETS = [
@@ -33,7 +35,7 @@ const DURATION_OPTIONS = [
   { label: '2 minutos', value: '2min' },
 ]
 
-export function ScriptEditor({ script, topics, audio }: ScriptEditorProps) {
+export function ScriptEditor({ script, topics, audio, initialTopicText, initialNotes }: ScriptEditorProps) {
   const router = useRouter()
   const isEditing = !!script
 
@@ -44,11 +46,11 @@ export function ScriptEditor({ script, topics, audio }: ScriptEditorProps) {
 
   // Generation inputs
   const [topicText, setTopicText] = useState(
-    script?.topic?.title ?? ''
+    script?.topic?.title ?? initialTopicText ?? ''
   )
   const [style, setStyle] = useState('')
   const [duration, setDuration] = useState('60s')
-  const [notes, setNotes] = useState('')
+  const [notes, setNotes] = useState(initialNotes ?? '')
 
   const [generating, setGenerating] = useState(false)
   const [saving, setSaving] = useState(false)
