@@ -40,3 +40,23 @@ export interface ScriptVersion {
 }
 
 export type ScriptInsert = Omit<Script, 'id' | 'user_id' | 'version' | 'created_at' | 'updated_at'>
+
+export type CalendarStatus = 'draft' | 'scheduled' | 'published' | 'archived'
+export type Platform = 'tiktok' | 'youtube' | 'instagram'
+
+export interface CalendarEntry {
+  id: string
+  user_id: string
+  title: string
+  script_id: string | null
+  scheduled_date: string | null  // ISO date string
+  platform: Platform | null
+  status: CalendarStatus
+  notes: string | null
+  created_at: string
+  updated_at: string
+  script?: { title: string } | null  // joined
+}
+
+export type CalendarEntryInsert = Omit<CalendarEntry, 'id' | 'user_id' | 'created_at' | 'updated_at' | 'script'>
+export type CalendarEntryUpdate = Partial<CalendarEntryInsert>
