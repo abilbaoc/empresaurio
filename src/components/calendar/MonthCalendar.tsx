@@ -22,14 +22,16 @@ const PLATFORM_PILL_CLASS: Record<Platform | 'none', string> = {
 
 const STATUS_VARIANT: Record<CalendarStatus, 'default' | 'secondary' | 'outline' | 'destructive'> = {
   draft: 'secondary',
-  scheduled: 'default',
+  ready: 'outline',
+  approved: 'default',
   published: 'default',
   archived: 'outline',
 }
 
 const STATUS_LABELS: Record<CalendarStatus, string> = {
   draft: 'Borrador',
-  scheduled: 'Programado',
+  ready: 'Listo',
+  approved: 'Aprobado',
   published: 'Publicado',
   archived: 'Archivado',
 }

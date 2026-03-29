@@ -39,6 +39,7 @@ export async function PATCH(
   if (body.platform !== undefined) updatePayload.platform = body.platform
   if (body.notes !== undefined) updatePayload.notes = body.notes
   if (body.script_id !== undefined) updatePayload.script_id = body.script_id
+  if (body.approval_feedback !== undefined) updatePayload.approval_feedback = body.approval_feedback
 
   const { data, error } = await supabase
     .from('content_calendar')

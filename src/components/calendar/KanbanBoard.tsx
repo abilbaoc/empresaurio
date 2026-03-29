@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import type { CalendarEntry, CalendarStatus, Platform } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
 const COLUMNS: { status: CalendarStatus; label: string }[] = [
   { status: 'draft', label: 'Borrador' },
-  { status: 'scheduled', label: 'Programado' },
+  { status: 'ready', label: 'Listo' },
+  { status: 'approved', label: 'Aprobado' },
   { status: 'published', label: 'Publicado' },
   { status: 'archived', label: 'Archivado' },
 ]
@@ -27,9 +29,26 @@ const PLATFORM_LABELS: Record<Platform, string> = {
 
 const STATUS_HEADER_CLASS: Record<CalendarStatus, string> = {
   draft: 'text-muted-foreground',
-  scheduled: 'text-blue-400',
-  published: 'text-green-400',
+  ready: 'text-blue-400',
+  approved: 'text-green-400',
+  published: 'text-emerald-400',
   archived: 'text-muted-foreground',
+}
+
+const STATUS_BADGE_CLASS: Record<CalendarStatus, string> = {
+  draft: 'bg-muted/60 text-muted-foreground',
+  ready: 'bg-blue-500/15 text-blue-400',
+  approved: 'bg-green-500/15 text-green-400',
+  published: 'bg-emerald-500/15 text-emerald-400',
+  archived: 'bg-muted/60 text-muted-foreground',
+}
+
+const STATUS_LABEL: Record<CalendarStatus, string> = {
+  draft: 'Borrador',
+  ready: 'Listo',
+  approved: 'Aprobado',
+  published: 'Publicado',
+  archived: 'Archivado',
 }
 
 interface Props {
@@ -47,7 +66,8 @@ export function KanbanBoard({ entries, onEntryUpdated }: Props) {
 
   const byStatus: Record<CalendarStatus, CalendarEntry[]> = {
     draft: [],
-    scheduled: [],
+    ready: [],
+    approved: [],
     published: [],
     archived: [],
   }
@@ -109,7 +129,7 @@ export function KanbanBoard({ entries, onEntryUpdated }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-4 gap-3 min-h-[400px]">
+    <div className="grid grid-cols-5 gap-3 min-h-[400px]">
       {COLUMNS.map(({ status, label }) => {
         const colEntries = byStatus[status]
         const isOver = draggingOver === status
@@ -180,6 +200,11 @@ function KanbanCard({ entry, isDragging, onDragStart, onDragEnd }: KanbanCardPro
       <p className="text-xs font-medium leading-snug line-clamp-2">{entry.title}</p>
 
       <div className="flex flex-wrap items-center gap-1">
+        {/* Status badge */}
+        <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-medium', STATUS_BADGE_CLASS[entry.status])}>
+          {STATUS_LABEL[entry.status]}
+        </span>
+
         {entry.platform && (
           <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-medium', pillClass(entry.platform))}>
             {PLATFORM_LABELS[entry.platform]}
@@ -200,6 +225,15 @@ function KanbanCard({ entry, isDragging, onDragStart, onDragEnd }: KanbanCardPro
           })}
         </p>
       )}
+
+      {/* Preview link */}
+      <Link
+        href={`/content/${entry.id}/preview`}
+        onClick={(e) => e.stopPropagation()}
+        className="block text-[10px] text-primary hover:underline"
+      >
+        Ver preview →
+      </Link>
     </div>
   )
 }
