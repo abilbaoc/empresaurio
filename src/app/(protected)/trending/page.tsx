@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { RefreshCw, Flame } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { TrendingTopicCard } from '@/components/trending/TrendingTopicCard'
 import type { TrendingTopic, TrendingSource } from '@/lib/types'
 
@@ -47,12 +47,10 @@ export default async function TrendingPage() {
             </p>
           )}
         </div>
-        <Button asChild variant={isFresh ? 'outline' : 'default'}>
-          <Link href="/api/trending/refresh">
-            <RefreshCw className="h-4 w-4 mr-2" />
-            {allTopics.length === 0 ? 'Cargar temas' : 'Actualizar'}
-          </Link>
-        </Button>
+        <Link href="/api/trending/refresh" className={buttonVariants({ variant: isFresh ? 'outline' : 'default' })}>
+          <RefreshCw className="h-4 w-4 mr-2" />
+          {allTopics.length === 0 ? 'Cargar temas' : 'Actualizar'}
+        </Link>
       </div>
 
       {allTopics.length > 0 && (
@@ -85,12 +83,10 @@ export default async function TrendingPage() {
           <p className="text-sm text-muted-foreground mb-4">
             Carga los temas trending de HackerNews, TechCrunch, The Verge, Ars Technica y Product Hunt.
           </p>
-          <Button asChild>
-            <Link href="/api/trending/refresh">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Cargar temas
-            </Link>
-          </Button>
+          <Link href="/api/trending/refresh" className={buttonVariants()}>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Cargar temas
+          </Link>
         </div>
       )}
 

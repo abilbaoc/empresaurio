@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { ExternalLink, Zap } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import type { TrendingTopic, TrendingSource } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -58,19 +58,15 @@ export function TrendingTopicCard({ topic }: { topic: TrendingTopic }) {
           )}
         </div>
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="flex-1">
-            <Link href={generateScriptUrl}>
-              <Zap className="h-3.5 w-3.5 mr-1.5" />
-              Generar guion
-            </Link>
-          </Button>
+          <Link href={generateScriptUrl} className={buttonVariants({ size: 'sm', className: 'flex-1' })}>
+            <Zap className="h-3.5 w-3.5 mr-1.5" />
+            Generar guion
+          </Link>
           {topic.url && (
-            <Button asChild variant="ghost" size="icon" className="h-8 w-8 shrink-0">
-              <a href={topic.url} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span className="sr-only">Ver fuente</span>
-              </a>
-            </Button>
+            <a href={topic.url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: 'ghost', size: 'icon', className: 'h-8 w-8 shrink-0' })}>
+              <ExternalLink className="h-3.5 w-3.5" />
+              <span className="sr-only">Ver fuente</span>
+            </a>
           )}
         </div>
       </CardContent>
